@@ -1,0 +1,10 @@
+.content {
+    display: flex;
+}
+
+.login {
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: center;
+    align-content: center;
+  }
