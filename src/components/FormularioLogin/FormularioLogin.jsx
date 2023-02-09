@@ -5,8 +5,9 @@ import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 import { withStyles } from "@material-ui/core/styles";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router";
+import { Typography } from "@mui/material";
 
 const styles = {
   form: {
@@ -41,9 +42,9 @@ const styles = {
 };
 
 function FormularioLogin(props) {
-  
+
   const { classes } = props;
-  
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -54,8 +55,16 @@ function FormularioLogin(props) {
     <div>
       <Box className={classes.logo}>
         <img src={logo} alt="Logo" width={180} height={250} />
-        <h1>Faça seu login:</h1>
+        <Typography
+          sx={{
+            fontSize: 'xx-large',
+            fontWeight: 'bold'
+          }}
+          mt={3}
+        >Faça seu login:
+        </Typography>
       </Box>
+
       <FormControl
         component="form"
         onSubmit={(event) => {
@@ -110,7 +119,7 @@ function FormularioLogin(props) {
         >
           Cadastrar
         </Button>
-        
+
       </FormControl>
     </div>
   );
