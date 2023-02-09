@@ -97,9 +97,13 @@ function FormularioLogin(props) {
           <Divider variant="middle" className={classes.divider} />
         </Box>
 
-        <Button variant="contained" className={classes.buttonRegister}>
+        <Button
+          variant="contained"
+          className={classes.buttonRegister}
+        >
           Cadastrar
         </Button>
+        
       </FormControl>
     </div>
   );
