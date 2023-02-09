@@ -6,6 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 import { withStyles } from "@material-ui/core/styles";
 import logo from "../assets/logo.png";
+import { useNavigate } from "react-router";
 
 const styles = {
   form: {
@@ -40,9 +41,14 @@ const styles = {
 };
 
 function FormularioLogin(props) {
+  
   const { classes } = props;
+  
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+
+  const navigate = useNavigate();
+  const paginaCadastro = () => navigate('/cadastro');
 
   return (
     <div>
@@ -100,6 +106,7 @@ function FormularioLogin(props) {
         <Button
           variant="contained"
           className={classes.buttonRegister}
+          onClick={paginaCadastro}
         >
           Cadastrar
         </Button>
