@@ -4,7 +4,12 @@ import FormularioCadastro from '../../components/FormularioCadastro/FormularioCa
 export default function Cadastro() {
     return (
 
-        <FormularioCadastro />
+        <FormularioCadastro hungryUser={newUser} />
         
     )
+}
+
+function newUser(data) {
+    //conexão com a api
+    console.log(data)
 }

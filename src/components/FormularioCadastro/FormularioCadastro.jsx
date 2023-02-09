@@ -1,13 +1,12 @@
 import { TextField, Typography, Button, Box, FormControl } from '@mui/material'
 import React, { useState } from 'react'
-import './FormularioCadastro.css'
 import logo from '../../assets/logo.png'
 
-export default function FormularioCadastro() {
+export default function FormularioCadastro(hungryUser) {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
+    const [password, setPassword] = useState("");
 
     return (
         <div>
@@ -31,8 +30,13 @@ export default function FormularioCadastro() {
                 component="form"
                 onSubmit={(event) => {
                     event.preventDefault();
+                    hungryUser({ name, email, password })
                 }}
-                className="content"
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}
             >
 
                 <TextField
@@ -70,12 +74,12 @@ export default function FormularioCadastro() {
                 />
 
                 <TextField
-                    value={senha}
+                    value={password}
                     onChange={(event) => {
-                        setSenha(event.target.value);
+                        setPassword(event.target.value);
                     }}
                     required
-                    id="senha"
+                    id="password"
                     type="text"
                     label="Senha"
                     variant="outlined"
@@ -94,6 +98,6 @@ export default function FormularioCadastro() {
                 </Button>
 
             </FormControl>
-        </div>
+        </div >
     )
 }
