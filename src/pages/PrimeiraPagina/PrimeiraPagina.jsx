@@ -1,23 +1,30 @@
 import FormularioLogin from '../../components/FormularioLogin';
-import Container from '@mui/material/Container';
-// import background from '../../background.webp'
 
-export default function PrimeiraPagina() {
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import { withStyles } from '@material-ui/core/styles';
+
+
+
+const styles = {
+    centered: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+};
+
+const PrimeiraPagina = ({ classes }) => {
     return (
-        <div className="content">
-            {/* <Container>
-                Topbar
-                <img src={background} />
-            </Container> */}
-
+        <div className={classes.centered}>
             <Container
                 className="login"
                 component="article">
-
-                <h1> Faça seu login: </h1>
                 <FormularioLogin />
-
             </Container>
         </div>
     );
-}
+};
+
+export default withStyles(styles)(PrimeiraPagina);
