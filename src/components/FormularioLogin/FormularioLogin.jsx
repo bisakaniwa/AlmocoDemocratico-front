@@ -43,49 +43,22 @@ const styles = {
 };
 
 function FormularioLogin(props) {
-  const [isLoading, setLoading] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false);
-
   async function login({ email, password }) {
-    setLoading(true);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/user/login",
-        {
-          email,
-          password,
-        }
-      );
-      const data = response.data;
-      if (data.status === "success") {
-        setLoginSuccess(true);
-        console.log("Deu CERTO");
-      } else {
-        setLoginSuccess(false);
-        console.log("Deu ruim");
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    axios
+      .post("http://localhost:8080/api/v1/user/login", { email, password })
+      .then((response) => {
+        const hungryUser = response.data;
+        console.log(hungryUser);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   const { classes } = props;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = React.useState(false);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (password.length >= 8 && password.length <= 12) {
-      console.log("Login realizado com sucesso!");
-    } else {
-      setError(true);
-    }
-  };
 
   const navigate = useNavigate();
   const paginaCadastro = () => navigate("/cadastro");
@@ -125,6 +98,7 @@ function FormularioLogin(props) {
           variant="outlined"
           color="primary"
           margin="normal"
+          autocomplete="on"
         />
 
         <TextField
@@ -133,21 +107,16 @@ function FormularioLogin(props) {
           required
           margin="normal"
           variant="outlined"
+          autocomplete="on"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          error={error}
         />
-        {error && (
-          <Typography variant="subtitle2" color="error">
-            A senha deve ter pelo menos 8 e no máximo 12 caracteres.
-          </Typography>
-        )}
         <Button
           variant="contained"
           color="primary"
           type="submit"
-          onClick={handleSubmit}
-          disabled={error || password.length < 8 || password.length > 12}
+          onClick={console.log(login)}
+          disabled={password.length < 8 || password.length > 12}
         >
           Entrar
         </Button>
