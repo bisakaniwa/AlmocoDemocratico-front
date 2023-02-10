@@ -49,8 +49,7 @@ function FormularioLogin(props) {
       .then((response) => {
         const hungryUser = response.data;
         if (hungryUser === true) {
-          console.log("tudo certo")
-          return () => navigate("/home")
+          return navigate("/home");
         } else {
           return navigate("/");
         }
@@ -60,87 +59,86 @@ function FormularioLogin(props) {
       });
   }
 
-const { classes } = props;
+  const { classes } = props;
 
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-const navigate = useNavigate();
-const paginaCadastro = () => navigate("/cadastro");
+  const navigate = useNavigate();
+  const paginaCadastro = () => navigate("/cadastro");
 
-
-return (
-  <div>
-    <Box className={classes.logo}>
-      <img src={logo} alt="Logo" width={180} height={250} />
-      <Typography
-        sx={{
-          fontSize: "xx-large",
-          fontWeight: "bold",
-        }}
-        mt={3}
-      >
-        Faça seu login:
-      </Typography>
-    </Box>
-
-    <FormControl
-      component="form"
-      onSubmit={(event) => {
-        event.preventDefault();
-        var userLogin = {email, password};
-      }}
-      className={classes.form}
-    >
-      <TextField
-        value={email}
-        onChange={(event) => {
-          setEmail(event.target.value);
-        }}
-        required
-        id="email"
-        type="email"
-        label="E-mail"
-        variant="outlined"
-        color="primary"
-        margin="normal"
-        autoComplete="on"
-      />
-
-      <TextField
-        label="Senha"
-        type="password"
-        required
-        margin="normal"
-        variant="outlined"
-        autoComplete="on"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        type="submit"
-        onClick={() => login()}
-        disabled={password.length < 8 || password.length > 12}
-      >
-        Entrar
-      </Button>
-
-      <Box mt={2} mb={5}>
-        <Divider variant="middle" className={classes.divider} />
+  return (
+    <div>
+      <Box className={classes.logo}>
+        <img src={logo} alt="Logo" width={180} height={250} />
+        <Typography
+          sx={{
+            fontSize: "xx-large",
+            fontWeight: "bold",
+          }}
+          mt={3}
+        >
+          Faça seu login:
+        </Typography>
       </Box>
 
-      <Button
-        variant="contained"
-        className={classes.buttonRegister}
-        onClick={paginaCadastro}
+      <FormControl
+        component="form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          var userLogin = { email, password };
+        }}
+        className={classes.form}
       >
-        Cadastrar
-      </Button>
-    </FormControl>
-  </div>
-);
+        <TextField
+          value={email}
+          onChange={(event) => {
+            setEmail(event.target.value);
+          }}
+          required
+          id="email"
+          type="email"
+          label="E-mail"
+          variant="outlined"
+          color="primary"
+          margin="normal"
+          autoComplete="on"
+        />
+
+        <TextField
+          label="Senha"
+          type="password"
+          required
+          margin="normal"
+          variant="outlined"
+          autoComplete="on"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          onClick={() => login()}
+          disabled={password.length < 8 || password.length > 12}
+        >
+          Entrar
+        </Button>
+
+        <Box mt={2} mb={5}>
+          <Divider variant="middle" className={classes.divider} />
+        </Box>
+
+        <Button
+          variant="contained"
+          className={classes.buttonRegister}
+          onClick={paginaCadastro}
+        >
+          Cadastrar
+        </Button>
+      </FormControl>
+    </div>
+  );
 }
 
 export default withStyles(styles)(FormularioLogin);
