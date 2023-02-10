@@ -6,7 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 import { withStyles } from "@material-ui/core/styles";
 import logo from "../../assets/logo.png";
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { Typography } from "@mui/material";
 import axios from "axios";
 
@@ -86,7 +86,7 @@ function FormularioLogin(props) {
         component="form"
         onSubmit={(event) => {
           event.preventDefault();
-          var userLogin = { email, password };
+          login({ email, password });
         }}
         className={classes.form}
       >

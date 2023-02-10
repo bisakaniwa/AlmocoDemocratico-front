@@ -84,6 +84,8 @@ export default function CadastroRestaurante() {
                     type="text"
                     label="Descrição"
                     variant="outlined"
+                    multiline
+                    rows={3}
                     color="primary"
                     margin="normal"
                     sx={{
@@ -91,16 +93,39 @@ export default function CadastroRestaurante() {
                     }}
                 />
 
-                <Typography> Endereço: </Typography>
-                
-                <Box className="endereco-select">
+                <TextField
+                    value={website}
+                    onChange={(event) => {
+                        setWebsite(event.target.value);
+                    }}
+                    id="website"
+                    type="text"
+                    label="Site ou endereço para cardápio"
+                    variant="outlined"
+                    color="primary"
+                    margin="normal"
+                    helperText="Esse restaurante possui uma página na internet?"
+                    sx={{
+                        width: 450
+                    }}
+                />
+
+                <Typography
+                    sx={{
+                        fontSize: 'x-large',
+                        mt: 2
+                    }}>
+                    Endereço:
+                </Typography>
+
+                <Box>
                     <TextField
                         value={district}
                         onChange={(event) => {
                             setDistrict(event.target.value);
                         }}
                         required
-                        id="address"
+                        id="district"
                         select
                         label="Estado"
                         variant="outlined"
@@ -108,6 +133,7 @@ export default function CadastroRestaurante() {
                         margin="normal"
                         autoComplete="on"
                         sx={{
+                            mr: 2,
                             width: 150
                         }}
                     />
@@ -118,7 +144,7 @@ export default function CadastroRestaurante() {
                             setCity(event.target.value);
                         }}
                         required
-                        id="address"
+                        id="city"
                         type="text"
                         autoComplete="on"
                         label="Cidade"
@@ -126,7 +152,7 @@ export default function CadastroRestaurante() {
                         color="primary"
                         margin="normal"
                         sx={{
-                            width: 450
+                            width: 380
                         }}
                     />
                 </Box>
@@ -145,9 +171,12 @@ export default function CadastroRestaurante() {
                         color="primary"
                         margin="normal"
                         sx={{
+                            mr: 2,
                             width: 450
                         }}
-                    />
+                        helperText="Rua, avenida, etc."
+                    >
+                    </TextField>
 
                     <TextField
                         value={addressNumber}
@@ -167,9 +196,47 @@ export default function CadastroRestaurante() {
                     />
                 </Box>
 
+                <Box>
+                    <TextField
+                        value={addressComplement}
+                        onChange={(event) => {
+                            setAddressComplement(event.target.value);
+                        }}
+                        id="addressComplement"
+                        type="text"
+                        label="Complemento"
+                        variant="outlined"
+                        color="primary"
+                        margin="normal"
+                        sx={{
+                            mr: 2,
+                            width: 450
+                        }}
+                        helperText="Opcional"
+                    />
+
+                    <TextField
+                        value={cep}
+                        onChange={(event) => {
+                            setCep(event.target.value);
+                        }}
+                        required
+                        id="cep"
+                        type="text"
+                        label="CEP"
+                        variant="outlined"
+                        color="primary"
+                        margin="normal"
+                        sx={{
+                            width: 200
+                        }}
+                    />
+                </Box>
+
                 <Button
                     type="submit"
                     variant="contained"
+                    onClick={() => newRestaurant()}
                 >
                     Cadastrar
                 </Button>

@@ -1,0 +1,9 @@
+.cadastro-restaurante {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.cadastro-restaurante:hover {
+    color: blue;
+}
