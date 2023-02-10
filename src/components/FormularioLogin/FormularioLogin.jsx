@@ -8,6 +8,19 @@ import { withStyles } from "@material-ui/core/styles";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router";
 import { Typography } from "@mui/material";
+import axios from "axios";
+
+function getUser() {
+  axios
+    .get('http://localhost:8080/api/v1/user')
+  .then((response) => {
+    const hungryUser = response.data;
+    console.log(hungryUser)
+  })
+  .catch(function (error) {
+    console.log(error)
+  });
+}
 
 const styles = {
   form: {
@@ -41,12 +54,19 @@ const styles = {
   },
 };
 
-function FormularioLogin(props) {
+function FormularioLogin(props, hungryUser) {
 
   const { classes } = props;
+  function validUser(email, senha) {
+    if (hungryUser.email === email && hungryUser.senha === senha) {
+      return console.log(true);
+    } else {
+      return console.log(false);
+    }
+  }
 
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
   const paginaCadastro = () => navigate('/cadastro');
@@ -69,6 +89,7 @@ function FormularioLogin(props) {
         component="form"
         onSubmit={(event) => {
           event.preventDefault();
+          getUser({ email, password })
         }}
         className={classes.form}
       >
@@ -87,12 +108,12 @@ function FormularioLogin(props) {
         />
 
         <TextField
-          value={senha}
+          value={password}
           onChange={(event) => {
-            setSenha(event.target.value);
+            setPassword(event.target.value);
           }}
           required
-          id="senha"
+          id="password"
           type="text"
           label="Senha"
           variant="outlined"
@@ -104,6 +125,7 @@ function FormularioLogin(props) {
           type="submit"
           variant="contained"
           className={classes.buttonEnter}
+          onClick={validUser}
         >
           Entrar
         </Button>

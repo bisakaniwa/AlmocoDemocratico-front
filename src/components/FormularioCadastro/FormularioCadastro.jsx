@@ -1,8 +1,21 @@
 import { TextField, Typography, Button, Box, FormControl } from '@mui/material'
+import axios from 'axios';
 import React, { useState } from 'react'
 import logo from '../../assets/logo.png'
 
 export default function FormularioCadastro(hungryUser) {
+
+    function newUser(hungryUser) {
+        axios
+            .post('http://localhost:8080/api/v1/user/register', hungryUser)
+            .then((response) => {
+                const hungryUser = response.data;
+                console.log(hungryUser);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -30,7 +43,7 @@ export default function FormularioCadastro(hungryUser) {
                 component="form"
                 onSubmit={(event) => {
                     event.preventDefault();
-                    hungryUser({ name, email, password })
+                    newUser({ name, email, password })
                 }}
                 sx={{
                     display: 'flex',
