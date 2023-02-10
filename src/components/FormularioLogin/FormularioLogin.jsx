@@ -6,13 +6,9 @@ import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 import { withStyles } from "@material-ui/core/styles";
 import logo from "../../assets/logo.png";
-import { useNavigate, Route } from "react-router";
+import { redirect, useNavigate } from "react-router";
 import { Typography } from "@mui/material";
 import axios from "axios";
-import { api } from "../../api/axiosConfig";
-
-import PrimeiraPagina from "../../pages/PrimeiraPagina/PrimeiraPagina";
-import Home from "../../pages/Home/Home";
 
 const styles = {
   form: {
@@ -47,110 +43,104 @@ const styles = {
 };
 
 function FormularioLogin(props) {
-
-  function login() {
+  async function login(userLogin) {
     axios
-      .post('http://localhost:8080/api/v1/user/login', {email, password})
+      .post("http://localhost:8080/api/v1/user/login", { email, password })
       .then((response) => {
         const hungryUser = response.data;
-        console.log(hungryUser)
+        if (hungryUser === true) {
+          console.log("tudo certo")
+          return () => navigate("/home")
+        } else {
+          return navigate("/");
+        }
       })
       .catch(function (error) {
-        console.log(error)
+        console.log(error);
       });
   }
 
-  function validUser() {
-    if (login === true) {
-      return homePage;
-    } else {
-      return navigate('/')
-    }
-  }
+const { classes } = props;
 
-  const { classes } = props;
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const navigate = useNavigate();
+const paginaCadastro = () => navigate("/cadastro");
 
-  const navigate = useNavigate();
-  const paginaCadastro = () => navigate('/cadastro');
-  const homePage = () => navigate('/home')
 
-  return (
-    <div>
-      <Box className={classes.logo}>
-        <img src={logo} alt="Logo" width={180} height={250} />
-        <Typography
-          sx={{
-            fontSize: 'xx-large',
-            fontWeight: 'bold'
-          }}
-          mt={3}
-        >Faça seu login:
-        </Typography>
+return (
+  <div>
+    <Box className={classes.logo}>
+      <img src={logo} alt="Logo" width={180} height={250} />
+      <Typography
+        sx={{
+          fontSize: "xx-large",
+          fontWeight: "bold",
+        }}
+        mt={3}
+      >
+        Faça seu login:
+      </Typography>
+    </Box>
+
+    <FormControl
+      component="form"
+      onSubmit={(event) => {
+        event.preventDefault();
+        var userLogin = {email, password};
+      }}
+      className={classes.form}
+    >
+      <TextField
+        value={email}
+        onChange={(event) => {
+          setEmail(event.target.value);
+        }}
+        required
+        id="email"
+        type="email"
+        label="E-mail"
+        variant="outlined"
+        color="primary"
+        margin="normal"
+        autoComplete="on"
+      />
+
+      <TextField
+        label="Senha"
+        type="password"
+        required
+        margin="normal"
+        variant="outlined"
+        autoComplete="on"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+      />
+      <Button
+        variant="contained"
+        color="primary"
+        type="submit"
+        onClick={() => login()}
+        disabled={password.length < 8 || password.length > 12}
+      >
+        Entrar
+      </Button>
+
+      <Box mt={2} mb={5}>
+        <Divider variant="middle" className={classes.divider} />
       </Box>
 
-      <FormControl
-        component="form"
-        onSubmit={(event) => {
-          event.preventDefault();
-          login({ email, password })
-        }}
-        className={classes.form}
+      <Button
+        variant="contained"
+        className={classes.buttonRegister}
+        onClick={paginaCadastro}
       >
-        <TextField
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-          required
-          id="email"
-          type="text"
-          label="E-mail"
-          variant="outlined"
-          color="primary"
-          margin="normal"
-        />
-
-        <TextField
-          value={password}
-          onChange={(event) => {
-            setPassword(event.target.value);
-          }}
-          required
-          id="password"
-          type="text"
-          label="Senha"
-          variant="outlined"
-          color="primary"
-          margin="normal"
-        />
-
-        <Button
-          type="submit"
-          variant="contained"
-          className={classes.buttonEnter}
-          onClick={validUser}
-        >
-          Entrar
-        </Button>
-
-        <Box mt={2} mb={5}>
-          <Divider variant="middle" className={classes.divider} />
-        </Box>
-
-        <Button
-          variant="contained"
-          className={classes.buttonRegister}
-          onClick={paginaCadastro}
-        >
-          Cadastrar
-        </Button>
-
-      </FormControl>
-    </div>
-  );
+        Cadastrar
+      </Button>
+    </FormControl>
+  </div>
+);
 }
 
 export default withStyles(styles)(FormularioLogin);
