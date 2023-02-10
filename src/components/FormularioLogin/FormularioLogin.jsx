@@ -6,9 +6,13 @@ import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 import { withStyles } from "@material-ui/core/styles";
 import logo from "../../assets/logo.png";
-import { useNavigate } from "react-router";
+import { useNavigate, Route } from "react-router";
 import { Typography } from "@mui/material";
 import axios from "axios";
+import { api } from "../../api/axiosConfig";
+
+import PrimeiraPagina from "../../pages/PrimeiraPagina/PrimeiraPagina";
+import Home from "../../pages/Home/Home";
 
 const styles = {
   form: {
@@ -44,16 +48,24 @@ const styles = {
 
 function FormularioLogin(props) {
 
-  function login({ email, password }) {
+  function login() {
     axios
-      .post('http://localhost:8080/api/v1/user/login')
-    .then((response) => {
-      const hungryUser = response.data;
-      console.log(hungryUser)
-    })
-    .catch(function (error) {
-      console.log(error)
-    });
+      .post('http://localhost:8080/api/v1/user/login', {email, password})
+      .then((response) => {
+        const hungryUser = response.data;
+        console.log(hungryUser)
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
+  }
+
+  function validUser() {
+    if (login === true) {
+      return homePage;
+    } else {
+      return navigate('/')
+    }
   }
 
   const { classes } = props;
@@ -63,6 +75,7 @@ function FormularioLogin(props) {
 
   const navigate = useNavigate();
   const paginaCadastro = () => navigate('/cadastro');
+  const homePage = () => navigate('/home')
 
   return (
     <div>
@@ -118,7 +131,7 @@ function FormularioLogin(props) {
           type="submit"
           variant="contained"
           className={classes.buttonEnter}
-          onClick={console.log(login)}
+          onClick={validUser}
         >
           Entrar
         </Button>
