@@ -43,26 +43,52 @@ const styles = {
 };
 
 function FormularioLogin(props) {
+  const [isLoading, setLoading] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
-  function login({ email, password }) {
-    axios
-      .post('http://localhost:8080/api/v1/user/login')
-    .then((response) => {
-      const hungryUser = response.data;
-      console.log(hungryUser)
-    })
-    .catch(function (error) {
-      console.log(error)
-    });
+  async function login({ email, password }) {
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/user/login",
+        {
+          email,
+          password,
+        }
+      );
+      const data = response.data;
+      if (data.status === "success") {
+        setLoginSuccess(true);
+        console.log("Deu CERTO");
+      } else {
+        setLoginSuccess(false);
+        console.log("Deu ruim");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const { classes } = props;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = React.useState(false);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (password.length >= 8 && password.length <= 12) {
+      console.log("Login realizado com sucesso!");
+    } else {
+      setError(true);
+    }
+  };
 
   const navigate = useNavigate();
-  const paginaCadastro = () => navigate('/cadastro');
+  const paginaCadastro = () => navigate("/cadastro");
 
   return (
     <div>
@@ -70,11 +96,12 @@ function FormularioLogin(props) {
         <img src={logo} alt="Logo" width={180} height={250} />
         <Typography
           sx={{
-            fontSize: 'xx-large',
-            fontWeight: 'bold'
+            fontSize: "xx-large",
+            fontWeight: "bold",
           }}
           mt={3}
-        >Faça seu login:
+        >
+          Faça seu login:
         </Typography>
       </Box>
 
@@ -82,7 +109,7 @@ function FormularioLogin(props) {
         component="form"
         onSubmit={(event) => {
           event.preventDefault();
-          login({ email, password })
+          login({ email, password });
         }}
         className={classes.form}
       >
@@ -93,7 +120,7 @@ function FormularioLogin(props) {
           }}
           required
           id="email"
-          type="text"
+          type="email"
           label="E-mail"
           variant="outlined"
           color="primary"
@@ -101,24 +128,26 @@ function FormularioLogin(props) {
         />
 
         <TextField
-          value={password}
-          onChange={(event) => {
-            setPassword(event.target.value);
-          }}
-          required
-          id="password"
-          type="text"
           label="Senha"
-          variant="outlined"
-          color="primary"
+          type="password"
+          required
           margin="normal"
+          variant="outlined"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          error={error}
         />
-
+        {error && (
+          <Typography variant="subtitle2" color="error">
+            A senha deve ter pelo menos 8 e no máximo 12 caracteres.
+          </Typography>
+        )}
         <Button
-          type="submit"
           variant="contained"
-          className={classes.buttonEnter}
-          onClick={console.log(login)}
+          color="primary"
+          type="submit"
+          onClick={handleSubmit}
+          disabled={error || password.length < 8 || password.length > 12}
         >
           Entrar
         </Button>
@@ -134,7 +163,6 @@ function FormularioLogin(props) {
         >
           Cadastrar
         </Button>
-
       </FormControl>
     </div>
   );
