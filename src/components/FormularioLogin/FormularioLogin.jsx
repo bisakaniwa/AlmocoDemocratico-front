@@ -10,18 +10,6 @@ import { useNavigate } from "react-router";
 import { Typography } from "@mui/material";
 import axios from "axios";
 
-function getUser() {
-  axios
-    .get('http://localhost:8080/api/v1/user')
-  .then((response) => {
-    const hungryUser = response.data;
-    console.log(hungryUser)
-  })
-  .catch(function (error) {
-    console.log(error)
-  });
-}
-
 const styles = {
   form: {
     display: "flex",
@@ -54,16 +42,21 @@ const styles = {
   },
 };
 
-function FormularioLogin(props, hungryUser) {
+function FormularioLogin(props) {
+
+  function login({ email, password }) {
+    axios
+      .post('http://localhost:8080/api/v1/user/login')
+    .then((response) => {
+      const hungryUser = response.data;
+      console.log(hungryUser)
+    })
+    .catch(function (error) {
+      console.log(error)
+    });
+  }
 
   const { classes } = props;
-  function validUser(email, senha) {
-    if (hungryUser.email === email && hungryUser.senha === senha) {
-      return console.log(true);
-    } else {
-      return console.log(false);
-    }
-  }
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -89,7 +82,7 @@ function FormularioLogin(props, hungryUser) {
         component="form"
         onSubmit={(event) => {
           event.preventDefault();
-          getUser({ email, password })
+          login({ email, password })
         }}
         className={classes.form}
       >
@@ -125,7 +118,7 @@ function FormularioLogin(props, hungryUser) {
           type="submit"
           variant="contained"
           className={classes.buttonEnter}
-          onClick={validUser}
+          onClick={console.log(login)}
         >
           Entrar
         </Button>
