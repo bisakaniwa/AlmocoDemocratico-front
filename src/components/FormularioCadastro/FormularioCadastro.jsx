@@ -1,13 +1,14 @@
 import { TextField, Typography, Button, Box, FormControl } from '@mui/material'
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router';
 import logo from '../../assets/logo.png'
 
-export default function FormularioCadastro(hungryUser) {
+export default function FormularioCadastro() {
 
     function newUser(hungryUser) {
         axios
-            .post('http://localhost:8080/api/v1/user/register', hungryUser)
+            .post('http://localhost:8080/api/v1/users/register', hungryUser)
             .then((response) => {
                 const hungryUser = response.data;
                 console.log(hungryUser);
@@ -20,6 +21,7 @@ export default function FormularioCadastro(hungryUser) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate;
 
     return (
         <div>
@@ -76,7 +78,7 @@ export default function FormularioCadastro(hungryUser) {
                     }}
                     required
                     id="email"
-                    type="text"
+                    type="email"
                     label="E-mail"
                     variant="outlined"
                     color="primary"
@@ -93,7 +95,7 @@ export default function FormularioCadastro(hungryUser) {
                     }}
                     required
                     id="password"
-                    type="text"
+                    type="password"
                     label="Senha"
                     variant="outlined"
                     color="primary"
@@ -106,6 +108,7 @@ export default function FormularioCadastro(hungryUser) {
                 <Button
                     type="submit"
                     variant="contained"
+                    onClick={() => navigate("/")}
                 >
                     Cadastrar-se
                 </Button>
