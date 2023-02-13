@@ -1,9 +1,21 @@
-.cadastro-restaurante {
+.lista-home {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-left: 0;
+    margin-top: 5%;
+    align-items: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.cadastro-restaurante, .restaurante-cadastrado, .votar, .perfil, .ultimos-restaurantes {
     text-decoration: none;
+    margin-bottom: 5%;
     color: black;
     cursor: pointer;
 }
 
-.cadastro-restaurante:hover {
+.cadastro-restaurante:hover, .restaurante-cadastrado:hover, .votar:hover, .perfil:hover, .ultimos-restaurantes:hover {
     color: blue;
 }
