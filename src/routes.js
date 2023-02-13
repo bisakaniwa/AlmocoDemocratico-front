@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import PrimeiraPagina from './pages/PrimeiraPagina/PrimeiraPagina';
 import Cadastro from './pages/Cadastro/Cadastro'
 import Home from "./pages/Home/Home";
-import CadastroRestaurante from "./pages/Restaurante/CadastroRestaurante/CadastroRestaurante";
+import CadastroRestaurante from "./pages/CadastroRestaurante/CadastroRestaurante";
+import Votar from "./pages/Votar/Votar";
+import RestaurantesCadastrados from "./pages/RestaurantesCadastrados/RestaurantesCadastrados";
 import NotFound from './pages/NotFound/NotFound'
 
 export default function AppRouter() {
@@ -19,7 +21,11 @@ export default function AppRouter() {
 
                 <Route path='/cadastro-restaurante' element={<CadastroRestaurante />} />
 
-                {/* <Route element={<NotFound />} /> */}
+                <Route path='/votar' element={<Votar />} />
+
+                <Route path='/restaurantes-cadastrados' element={<RestaurantesCadastrados />} />
+
+                <Route path='*' element={<NotFound />} />
 
             </Routes>
         </Router>

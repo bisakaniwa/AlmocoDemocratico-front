@@ -43,7 +43,7 @@ const styles = {
 };
 
 function FormularioLogin(props) {
-  async function login(userLogin) {
+  async function login() {
     axios
       .post("http://localhost:8080/api/v1/user/login", { email, password })
       .then((response) => {

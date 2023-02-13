@@ -10,6 +10,5 @@ export default function Cadastro() {
 }
 
 function newUser(data) {
-    //
     console.log(data)
 }

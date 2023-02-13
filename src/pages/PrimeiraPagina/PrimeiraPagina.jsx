@@ -1,7 +1,6 @@
 import FormularioLogin from '../../components/FormularioLogin/FormularioLogin';
 
 import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
 import { withStyles } from '@material-ui/core/styles';
 
 

@@ -1,21 +1,43 @@
+.content {
+    justify-content: center;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.imagem {
+    width: 6%;
+}
+
 .lista-home {
     display: flex;
     flex-direction: column;
-    text-align: center;
     padding-left: 0;
-    margin-top: 5%;
     align-items: center;
     font-size: xx-large;
     font-weight: bold;
 }
 
-.cadastro-restaurante, .restaurante-cadastrado, .votar, .perfil, .ultimos-restaurantes {
+.cadastro-restaurante,
+.restaurante-cadastrado,
+.votar,
+.perfil,
+.ultimos-restaurantes,
+.logout {
     text-decoration: none;
-    margin-bottom: 5%;
+    margin-bottom: 2.7%;
     color: black;
     cursor: pointer;
 }
 
-.cadastro-restaurante:hover, .restaurante-cadastrado:hover, .votar:hover, .perfil:hover, .ultimos-restaurantes:hover {
+.cadastro-restaurante:hover,
+.restaurante-cadastrado:hover,
+.votar:hover,
+.perfil:hover,
+.ultimos-restaurantes:hover,
+.logout:hover {
     color: blue;
 }

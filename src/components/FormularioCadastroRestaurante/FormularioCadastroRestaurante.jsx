@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Typography, Button, Box, FormControl } from '@mui/material'
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function CadastroRestaurante() {
 
@@ -11,6 +12,7 @@ export default function CadastroRestaurante() {
     const [addressNumber, setAddressNumber] = useState("");
     const [district, setDistrict] = useState("");
     const [city, setCity] = useState("");
+    const [state, setState] = useState("");
     const [cep, setCep] = useState("");
     const [website, setWebsite] = useState("")
 
@@ -26,6 +28,8 @@ export default function CadastroRestaurante() {
             })
     }
 
+    const navigate = useNavigate();
+
     return (
         <div>
             <Box
@@ -33,11 +37,12 @@ export default function CadastroRestaurante() {
                     textAlign: 'center'
                 }}
             >
-                {/* <img src={logo} alt="Logo" width={180} height={250} /> */}
+                
                 <Typography
                     sx={{
                         fontSize: 'xx-large',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        mt: 3
                     }}
                 >
                     Cadastre um restaurante:
@@ -48,7 +53,7 @@ export default function CadastroRestaurante() {
                 component="form"
                 onSubmit={(event) => {
                     event.preventDefault();
-                    newRestaurant({ name, description, address, addressComplement, addressNumber, district, city, cep })
+                    newRestaurant({ name, description, address, addressComplement, addressNumber, state, website, district, city, cep })
                 }}
                 sx={{
                     display: 'flex',
@@ -113,19 +118,19 @@ export default function CadastroRestaurante() {
                 <Typography
                     sx={{
                         fontSize: 'x-large',
-                        mt: 2
+                        mt: 4
                     }}>
                     Endereço:
                 </Typography>
 
                 <Box>
                     <TextField
-                        value={district}
+                        value={state}
                         onChange={(event) => {
-                            setDistrict(event.target.value);
+                            setState(event.target.value);
                         }}
                         required
-                        id="district"
+                        id="state"
                         select
                         label="Estado"
                         variant="outlined"
@@ -191,8 +196,23 @@ export default function CadastroRestaurante() {
                         color="primary"
                         margin="normal"
                         sx={{
-                            width: 100
+                            width: 100,
+                            mr: 2
                         }}
+                    />
+
+                    <TextField
+                        value={district}
+                        onChange={(event) => {
+                            setDistrict(event.target.value);
+                        }}
+                        required
+                        id="district"
+                        type="text"
+                        label="Bairro"
+                        variant="outlined"
+                        color="primary"
+                        margin="normal"
                     />
                 </Box>
 
@@ -233,13 +253,32 @@ export default function CadastroRestaurante() {
                     />
                 </Box>
 
-                <Button
-                    type="submit"
-                    variant="contained"
-                    onClick={() => newRestaurant()}
+                <Box
+                sx={{
+                    mb: 5,
+                    mt: 2
+                }}
                 >
-                    Cadastrar
-                </Button>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        onClick={() => newRestaurant()}
+                    >
+                        Cadastrar
+                    </Button>
+
+                    <Button
+                        type="button"
+                        variant="contained"
+                        onClick={() => navigate("/home")}
+                        sx={{
+                            backgroundColor: 'red',
+                            ml: 10
+                        }}
+                        >
+                        Cancelar
+                    </Button>
+                </Box>
 
             </FormControl>
         </div >
