@@ -23,23 +23,23 @@ export default function FormularioCadastro() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate;
 
-    return (
-        <div>
-            <Box
-                sx={{
-                    textAlign: 'center'
-                }}
-            >
-                <img src={logo} alt="Logo" width={180} height={250} />
-                <Typography
-                    sx={{
-                        fontSize: 'xx-large',
-                        fontWeight: 'bold'
-                    }}
-                >
-                    Faça seu cadastro:
-                </Typography>
-            </Box>
+  return (
+    <div>
+      <Box
+        sx={{
+          textAlign: "center",
+        }}
+      >
+        <img src={logo} alt="Logo" width={180} height={250} />
+        <Typography
+          sx={{
+            fontSize: "xx-large",
+            fontWeight: "bold",
+          }}
+        >
+          Faça seu cadastro:
+        </Typography>
+      </Box>
 
             <FormControl
                 component="form"
