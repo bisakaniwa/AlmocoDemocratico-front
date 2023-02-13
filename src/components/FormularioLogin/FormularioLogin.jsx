@@ -45,7 +45,7 @@ const styles = {
 function FormularioLogin(props) {
   async function login() {
     axios
-      .post("http://localhost:8080/api/v1/user/login", { email, password })
+      .post("http://localhost:8080/api/v1/users/login", { email, password })
       .then((response) => {
         const hungryUser = response.data;
         if (hungryUser === true) {
