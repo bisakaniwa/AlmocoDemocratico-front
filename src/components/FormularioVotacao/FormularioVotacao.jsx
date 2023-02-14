@@ -54,7 +54,7 @@ export default function FormularioVotacao() {
                 }}
                 onSubmit={(event) => {
                     event.preventDefault();
-                    restauranteEscolhido(nomeRestaurante);
+                    restauranteEscolhido(nomeRestaurante.nome);
                 }}
             >
                 <Typography
@@ -66,25 +66,26 @@ export default function FormularioVotacao() {
                     Restaurantes disponíveis:
                 </Typography>
 
-                <RadioGroup name="restaurantes">
+                <RadioGroup name="restaurantes"
+                    onChange={(event) => {
+                        setRestauranteEscolhido(event.target.value)
+                        console.log(nomeRestaurante)
+                    }}
+                    value={nomeRestaurante}
+                >
                     {restaurantes.map(restaurante => (
                         <FormControlLabel
-                            key={restaurante.name}
-                            value={nomeRestaurante}
+                            checked={nomeRestaurante === restaurante.name}
+                            key={restaurante.id}
+                            value={restaurante.name}
                             sx={{
                                 fontSize: 'xx-large',
                                 mb: 4
                             }}
                             control={<Radio />}
                             label={restaurante.name}
-                            onChange={(event) => {
-                                let restauranteSelecionado = event.target.value;
-                                setRestauranteEscolhido(restauranteSelecionado.name);
-                                console.log(restauranteSelecionado.name)
-                            }}
                         />
                     ))}
-
                 </RadioGroup>
 
                 <Box
@@ -100,6 +101,7 @@ export default function FormularioVotacao() {
                             backgroundColor: 'green',
                         }}
                         onClick={() => {
+                            console.log(nomeRestaurante);
                             restauranteEscolhido(nomeRestaurante);
                             navigate('/home')
                         }}
