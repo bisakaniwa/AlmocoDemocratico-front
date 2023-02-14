@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
-import React from "react";
+import { Typography, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -8,17 +8,18 @@ export default function RestaurantesCadastrados() {
 
     const navigate = useNavigate();
 
+    const [restaurantes, setRestaurantes] = useState([]);
 
-    function verRestaurantes() {
+    useEffect(() => {
         axios
-            .get("http://localhost:8080/api/v1/restaurants")
-            .then((listaRestaurantes) => {
-
+            .get("http://localhost:8080/api/v1/restaurants/all")
+            .then((response) => {
+                setRestaurantes(response.data);
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
-    }
+    }, []);
 
     return (
         <div className="content">
@@ -33,11 +34,22 @@ export default function RestaurantesCadastrados() {
                 Restaurantes cadastrados
             </Typography>
 
-            {/* <div>
-                {listaRestaurantes.map(restaurante => (
-                    <Link key={restaurante.id}></Link>
+            <div>
+                {restaurantes.map(restaurante => (
+                    <ul>
+                        <li key={restaurante.name} value={restaurante.name}>
+                            {restaurante.name}
+                        </li>
+                    </ul>
                 ))}
-            </div> */}
+            </div>
+
+            <Button
+                variant='contained'
+                onClick={() => navigate('/home')}
+            >
+                Voltar
+            </Button>
         </div>
     )
 }
