@@ -22,7 +22,27 @@ export default function CadastroRestaurante() {
   const [cep, setCep] = useState("");
   const [website, setWebsite] = useState("");
   const [states, setStates] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
 
+  useEffect(() => {
+    if (state.length > 0) {
+      fetch(`http://localhost:8080/api/v1/brazil-cities/${state}/all-cities`)
+        .then((response) => response.json())
+        .then((data) => setSuggestions(data))
+        .catch((error) => console.log(error));
+    } else {
+      setSuggestions([]);
+    }
+  }, [state, city]);
+
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  };
+
+  const handleStateChange = (event) => {
+    setState(event.target.value);
+    setCity("");
+  };
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/brazil-states/all")
@@ -34,9 +54,9 @@ export default function CadastroRestaurante() {
       });
   }, []);
 
-  function newRestaurant(restaurant) {
+  function newRestaurant(restaurantData) {
     axios
-      .post("http://localhost:8080/api/v1/restaurants/register", restaurant)
+      .post("http://localhost:8080/api/v1/restaurants/register", restaurantData)
       .then((response) => {
         const restaurant = response.data;
         console.log(restaurant);
@@ -154,9 +174,7 @@ export default function CadastroRestaurante() {
         <Box>
           <TextField
             value={state}
-            onChange={(event) => {
-              setState(event.target.value);
-            }}
+            onChange={handleStateChange}
             required
             id="state"
             select
@@ -177,96 +195,113 @@ export default function CadastroRestaurante() {
             ))}
           </TextField>
 
-          <TextField
-            value={city}
-            onChange={(event) => {
-              setCity(event.target.value);
-            }}
-            required
-            id="city"
-            type="text"
-            autoComplete="on"
-            label="Cidade"
-            variant="outlined"
-            color="primary"
-            margin="normal"
-            sx={{
-              width: 380,
-            }}
-          />
+          {state && (
+            <TextField
+              value={city}
+              onChange={handleCityChange}
+              id="city"
+              required
+              select
+              type="text"
+              label="Cidade"
+              variant="outlined"
+              color="primary"
+              margin="normal"
+              autoComplete="on"
+              sx={{ width: 450 }}
+            >
+              {suggestions.map((suggestion) => (
+                <MenuItem
+                  key={suggestion.cityName}
+                  value={suggestion.cityName}
+                  onClick={() => setCity(suggestion.cityName)}
+                >
+                  {suggestion.cityName}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
         </Box>
 
         <Box>
-          <TextField
-            value={address}
-            onChange={(event) => {
-              setAddress(event.target.value);
-            }}
-            required
-            id="address"
-            type="text"
-            label="Endereço"
-            variant="outlined"
-            color="primary"
-            margin="normal"
-            sx={{
-              mr: 2,
-              width: 450,
-            }}
-            helperText="Rua, avenida, etc."
-          ></TextField>
+          {state && city && (
+            <TextField
+              value={address}
+              onChange={(event) => {
+                setAddress(event.target.value);
+              }}
+              required
+              id="address"
+              type="text"
+              label="Endereço"
+              variant="outlined"
+              color="primary"
+              margin="normal"
+              sx={{
+                mr: 2,
+                width: 450,
+              }}
+              helperText="Rua, avenida, etc."
+            ></TextField>
+          )}
 
-          <TextField
-            value={addressNumber}
-            onChange={(event) => {
-              setAddressNumber(event.target.value);
-            }}
-            required
-            id="addressNumber"
-            type="text"
-            label="Número"
-            variant="outlined"
-            color="primary"
-            margin="normal"
-            sx={{
-              width: 100,
-              mr: 2,
-            }}
-          />
+          {state && city && address && (
+            <TextField
+              value={addressNumber}
+              onChange={(event) => {
+                setAddressNumber(event.target.value);
+              }}
+              required
+              id="addressNumber"
+              type="text"
+              label="Número"
+              variant="outlined"
+              color="primary"
+              margin="normal"
+              sx={{
+                width: 100,
+                mr: 2,
+              }}
+            />
+          )}
 
-          <TextField
-            value={district}
-            onChange={(event) => {
-              setDistrict(event.target.value);
-            }}
-            required
-            id="district"
-            type="text"
-            label="Bairro"
-            variant="outlined"
-            color="primary"
-            margin="normal"
-          />
+          {state && city && address && (
+            <TextField
+              value={district}
+              onChange={(event) => {
+                setDistrict(event.target.value);
+              }}
+              required
+              id="district"
+              type="text"
+              label="Bairro"
+              variant="outlined"
+              color="primary"
+              margin="normal"
+            />
+          )}
         </Box>
 
         <Box>
-          <TextField
-            value={addressComplement}
-            onChange={(event) => {
-              setAddressComplement(event.target.value);
-            }}
-            id="addressComplement"
-            type="text"
-            label="Complemento"
-            variant="outlined"
-            color="primary"
-            margin="normal"
-            sx={{
-              mr: 2,
-              width: 450,
-            }}
-            helperText="Opcional"
-          />
+          {state && city && address && (
+            <TextField
+              value={addressComplement}
+              onChange={(event) => {
+                setAddressComplement(event.target.value);
+              }}
+              id="addressComplement"
+              type="text"
+              label="Complemento"
+              variant="outlined"
+              color="primary"
+              margin="normal"
+              sx={{
+                mr: 2,
+                width: 450,
+              }}
+              helperText="Opcional"
+            />
+          )}
 
           <TextField
             value={cep}
