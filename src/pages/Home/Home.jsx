@@ -11,6 +11,7 @@ export default function Home() {
             </h3>
             <ul className="lista-home">
                 <Link to="/votar" className="votar"> Vote agora! </Link>
+                <Link to="/votacao" className="votacao"> Acompanhe os resultados de hoje </Link>
                 <Link to="/restaurantes-cadastrados" className="restaurante-cadastrado"> Restaurantes cadastrados </Link>
                 <Link to="/cadastro-restaurante" className="cadastro-restaurante"> Cadastrar um restaurante </Link>
                 <Link to="/ultimos-restaurantes" className="ultimos-restaurantes"> Últimos restaurantes escolhidos </Link>

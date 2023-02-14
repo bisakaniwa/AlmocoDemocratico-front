@@ -3,3 +3,7 @@
     color: black;
     font-size: xx-large;
 }
+
+.linkRestaurante:hover {
+    color: blue;
+}

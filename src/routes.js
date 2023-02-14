@@ -5,6 +5,7 @@ import Cadastro from './pages/Cadastro/Cadastro'
 import Home from "./pages/Home/Home";
 import CadastroRestaurante from "./pages/CadastroRestaurante/CadastroRestaurante";
 import Votar from "./pages/Votar/Votar";
+import Votacao from "./pages/Votacao/Votacao";
 import RestaurantesCadastrados from "./pages/RestaurantesCadastrados/RestaurantesCadastrados";
 import NotFound from './pages/NotFound/NotFound'
 
@@ -22,6 +23,8 @@ export default function AppRouter() {
                 <Route path='/cadastro-restaurante' element={<CadastroRestaurante />} />
 
                 <Route path='/votar' element={<Votar />} />
+
+                <Route path='/votacao' element={<Votacao />} />
 
                 <Route path='/restaurantes-cadastrados' element={<RestaurantesCadastrados />} />
 
