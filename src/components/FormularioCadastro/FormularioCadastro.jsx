@@ -6,6 +6,12 @@ import logo from '../../assets/logo.png'
 
 export default function FormularioCadastro() {
 
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    let hungryUser = { name, email, password }
+
     function newUser(hungryUser) {
         axios
             .post('http://localhost:8080/api/v1/users/register', hungryUser)
@@ -18,34 +24,29 @@ export default function FormularioCadastro() {
             })
     }
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate;
-
-  return (
-    <div>
-      <Box
-        sx={{
-          textAlign: "center",
-        }}
-      >
-        <img src={logo} alt="Logo" width={180} height={250} />
-        <Typography
-          sx={{
-            fontSize: "xx-large",
-            fontWeight: "bold",
-          }}
-        >
-          Faça seu cadastro:
-        </Typography>
-      </Box>
+    return (
+        <div>
+            <Box
+                sx={{
+                    textAlign: "center",
+                }}
+            >
+                <img src={logo} alt="Logo" width={180} height={250} />
+                <Typography
+                    sx={{
+                        fontSize: "xx-large",
+                        fontWeight: "bold",
+                    }}
+                >
+                    Faça seu cadastro:
+                </Typography>
+            </Box>
 
             <FormControl
                 component="form"
                 onSubmit={(event) => {
                     event.preventDefault();
-                    newUser({ name, email, password })
+                    newUser(hungryUser)
                 }}
                 sx={{
                     display: 'flex',
@@ -108,7 +109,10 @@ export default function FormularioCadastro() {
                 <Button
                     type="submit"
                     variant="contained"
-                    onClick={() => navigate("/")}
+                    onClick={() => {
+                        newUser(hungryUser);
+                        navigate('/')
+                    }}
                 >
                     Cadastrar-se
                 </Button>

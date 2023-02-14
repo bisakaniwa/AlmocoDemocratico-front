@@ -1,23 +1,37 @@
-import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, Button, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import './FormularioVotacao.css'
 
 export default function FormularioVotacao() {
 
     const navigate = useNavigate();
-    const [restaurantes, setRestaurantes] = useState([]);
+    const [restaurantes, getRestaurantes] = useState([]);
+    const [nomeRestaurante, setRestauranteEscolhido] = useState();
 
     useEffect(() => {
         axios
             .get("http://localhost:8080/api/v1/restaurants/all")
             .then((response) => {
-                setRestaurantes(response.data);
+                getRestaurantes(response.data);
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    });
+
+    function restauranteEscolhido(nomeRestaurante) {
+        axios
+            .post("http://localhost:8080/api/v1/votes/register", nomeRestaurante)
+            .then((response) => {
+                const restauranteEnviado = response.data;
+                console.log(restauranteEnviado)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
     return (
         <div className="content">
@@ -38,33 +52,44 @@ export default function FormularioVotacao() {
                     ml: 10,
                     mt: 5
                 }}
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    restauranteEscolhido(nomeRestaurante);
+                }}
             >
-                <FormLabel
+                <Typography
                     sx={{
                         fontSize: 'x-large',
                         mb: 3
                     }}
                 >
                     Restaurantes disponíveis:
-                </FormLabel>
+                </Typography>
 
                 <RadioGroup name="restaurantes">
                     {restaurantes.map(restaurante => (
                         <FormControlLabel
-                            key={restaurante.name} value={restaurante.name}
+                            key={restaurante.name}
+                            value={nomeRestaurante}
                             sx={{
+                                fontSize: 'xx-large',
                                 mb: 4
                             }}
                             control={<Radio />}
-                        >
-                            {restaurante.name}
-                        </FormControlLabel>
+                            label={restaurante.name}
+                            onChange={(event) => {
+                                let restauranteSelecionado = event.target.value;
+                                setRestauranteEscolhido(restauranteSelecionado.name);
+                                console.log(restauranteSelecionado.name)
+                            }}
+                        />
                     ))}
 
                 </RadioGroup>
 
                 <Box
                     sx={{
+                        display: 'flex',
                         justifyContent: 'center'
                     }}>
                     <Button
@@ -73,6 +98,10 @@ export default function FormularioVotacao() {
                         sx={{
                             mr: 10,
                             backgroundColor: 'green',
+                        }}
+                        onClick={() => {
+                            restauranteEscolhido(nomeRestaurante);
+                            navigate('/home')
                         }}
                     > Votar! </Button>
 

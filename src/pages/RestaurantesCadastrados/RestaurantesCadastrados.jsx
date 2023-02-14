@@ -1,8 +1,9 @@
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "./RestaurantesCadastrados.css"
 
 export default function RestaurantesCadastrados() {
 
@@ -34,22 +35,34 @@ export default function RestaurantesCadastrados() {
                 Restaurantes cadastrados
             </Typography>
 
-            <div>
+            <Box>
                 {restaurantes.map(restaurante => (
                     <ul>
-                        <li key={restaurante.name} value={restaurante.name}>
+                        <Link
+                            key={restaurante.name}
+                            value={restaurante.name}
+                            className="linkRestaurante"
+                        >
                             {restaurante.name}
-                        </li>
+                        </Link>
                     </ul>
                 ))}
-            </div>
+            </Box>
 
-            <Button
-                variant='contained'
-                onClick={() => navigate('/home')}
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'end',
+                    mr: 25
+                }}
             >
-                Voltar
-            </Button>
+                <Button
+                    variant='contained'
+                    onClick={() => navigate('/home')}
+                >
+                    Voltar
+                </Button>
+            </Box>
         </div>
     )
 }
